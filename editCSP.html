@@ -1,0 +1,77 @@
+<html>
+
+<head>
+    <script type="text/javascript" lang="javascript">
+        const splitCSP = () => {
+            const csp = document.getElementById('cspValue');
+            const cspParams = csp.value.split(';')
+            const container = document.getElementById('cspParams');
+            container.innerHTML = '';
+
+            document.getElementById('splittedParamsLabel').style = 'display:block';
+
+            let elem;
+            cspParams.forEach(param => {
+                elem = document.createElement('input');
+                elem.setAttribute('type', 'text');
+                elem.setAttribute('value', param);
+                elem.setAttribute('name', 'parameter');
+                elem.style = 'font-size: medium';
+                container.appendChild(elem);
+            });
+        }
+
+        const concatCSP = () => {
+            document.getElementById('resultLabel').style = 'display:block';
+
+            const inputs = [...document.getElementsByName('parameter')];
+
+            const values = inputs.map(input => {
+                return input.value;
+            });
+            const result = values.join(';');
+            const resultContainer = document.getElementById('result');
+            resultContainer.style = 'display:block';
+            resultContainer.innerHTML = result;
+        }
+    </script>
+
+    <style type="text/css">
+        .label {
+            margin: 10px;
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .buttonsContainer {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin: 10px;
+        }
+
+        .result {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px #0f0 solid;
+            font-size: larger;
+        }
+    </style>
+</head>
+
+<body style="margin: 10px;">
+    <span class="label" style="display: block">Content Security Policy</span>
+    <textarea id="cspValue" placeholder="Please put the CSP value here..."
+        style="width: 100%;font-size: medium;"></textarea>
+    <div class="buttonsContainer">
+        <button style="font-size:large" onclick="splitCSP()">Parse</button>
+        <button style="font-size:large" onclick="concatCSP()">Concat</button>
+    </div>
+    <span id="splittedParamsLabel" class="label" style="display: none">Splitted Parameters</span>
+    <div id="cspParams" style="display: flex;flex-direction: column;"></div>
+    <span id="resultLabel" class="label" style="display: none">Result</span>
+    <span id="result" class="result"></span>
+</body>
+
+</html>
